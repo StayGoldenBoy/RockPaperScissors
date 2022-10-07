@@ -31,26 +31,14 @@ function playGame (playerSelection, computerSelection){
         
     } else {
         switch (tester){
-            case "rockpaper":
-                console.log("You lost becuase " + computerSelection + " beats " + playerSelection);
-                return "You lost becuase " + computerSelection + " beats " + playerSelection;
-                break;
+            case "rockpaper":  
             case "scissorsrock":
-                console.log("You lost becuase " + computerSelection + " beats " + playerSelection);
-                return "You lost becuase " + computerSelection + " beats " + playerSelection;
-                break;
             case "paperscissors":
                 console.log("You lost becuase " + computerSelection + " beats " + playerSelection);
                 return "You lost becuase " + computerSelection + " beats " + playerSelection;
                 break;
             case "scissorspaper":
-                console.log("You won becuase " + playerSelection + " beats " + computerSelection);
-                return "You won becuase " + playerSelection + " beats " + computerSelection;
-                break;
             case "paperrock":
-                console.log("You won becuase " + playerSelection + " beats " + computerSelection);
-                return "You won becuase " + playerSelection + " beats " + computerSelection;
-                break;
             case "rockscissors":
                 console.log("You won becuase " + playerSelection + " beats " + computerSelection);
                 return "You won becuase " + playerSelection + " beats " + computerSelection;
