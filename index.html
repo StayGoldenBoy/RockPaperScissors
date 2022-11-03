@@ -4,11 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
 </head>
 <body>
-    <script src="core.js">
-        
+    <h2 id="start">Would you like to play Rock, Paper, Scissors?</h2>
+    <div id="explainGame">
+        If you choose to play, the game will continue until either you or the computer reach 5 points. Good luck!
+    </div>
+    <br>
+        <button id="yes">YES</button>
+        <button id="no">NO</button>
+    <br>
+    <div id="gameDiv"></div>
+    <br>
+    <div>
+        You chose:<span id="playerChose">  </span>
+        <br>
+        Computer randomly selected:<span id="computerChose">  </span>
+    </div>
+    <br>
+    <div id="eachGameResult"></div>
+    <br>
+    <div id="currentScoreDiv">
+        SCORE<br>
+        Player: <span id="playerScore">0</span> <br>
+        Computer: <span id="computerScore">0</span> <br>
+        Ties: <span id="tiesScore">0</span>
+
+
+    </div>
+    <div id="finalScoreDiv">
+        <p id="playerWins"> </p>
+        <p id="playerLost"></p>
+    </div>
+
+    
+
+
+    <script src="core.js"defer>
     </script>
 </body>
 </html>
