@@ -1,87 +1,143 @@
-//Start Game
-console.log(game());
+let playerSelection;
+let result;
+let tiescore = 0;
+let playerscore = 0;
+let computerscore = 0;
 
+
+function individualPlay(){
+    computerSelection = getComputerChoice();
+    playGame (playerSelection, computerSelection);
+    roundDescription();
+    keepScore();
+    updateScore();
+}
+
+//initialize game, once parameter used to prevent buttons being added endlessly
+const yesPlay = document.querySelector('#yes')
+    yesPlay.addEventListener('click', () => {
+        letsPlay(); }, {
+        once: true
+    });
+
+function letsPlay() {
+
+    const playRock = document.createElement("button");
+    playRock.id = "playRock";
+    playRock.innerText = "ROCK";
+    playRock.addEventListener('click',() => {
+        playerSelection = "rock";
+        individualPlay();
+    });
+
+    const playPaper = document.createElement("button");
+    playPaper.id = "playPaper";
+    playPaper.innerText = "PAPER";
+    playPaper.addEventListener('click',() => {
+        playerSelection = "paper";
+        individualPlay();
+     });
+
+    const playScissors = document.createElement("button");
+    playScissors.id = "playScissors";
+    playScissors.innerText = "SCISSORS";
+    playScissors.addEventListener('click',() => {
+        playerSelection = "scissors";
+        individualPlay();
+      });
+
+      const reload = document.createElement('button');
+      reload.innerText = "Start Over";
+    reload.addEventListener('click', () => {
+        location.reload();
+        tiescore = 0;
+        playerscore = 0;
+        computerscore = 0;
+        updateScore();
+    })
+
+    const container = document.querySelector('#gameDiv');
+      container.appendChild(playRock);
+      container.appendChild(playPaper);
+      container.appendChild(playScissors);
+      container.appendChild(reload);
+      
+    }
+//randomized computer selection
 function getComputerChoice(){
-    let computerChoice = ['Rock', 'Scissors', 'Paper'];
+    let computerChoice = ['rock', 'scissors', 'paper'];
     let randomSelect = computerChoice[Math.floor((Math.random()) * computerChoice.length)];
-    randomSelect = randomSelect.toLowerCase();
     console.log("Computer chose " + randomSelect);
     return randomSelect;
     }
 
-//creating test function for random playerselection
-//created solely to speed up the process of testing all outcomes.
-    //function getPlayerChoice(){
-    //let computerChoice = ['Rock', 'Scissors', 'Paper'];
-    //let randomPlayerSelect = computerChoice[Math.floor((Math.random()) * computerChoice.length)];
-    //randomPlayerSelect = randomPlayerSelect.toLowerCase();
-   // console.log("Player chose " + randomPlayerSelect);
-   // return randomPlayerSelect;
-   //}
 
 // 1 round of RPS.
 function playGame (playerSelection, computerSelection){
     const tester = playerSelection + computerSelection;
-    let result;
-        if (playerSelection == computerSelection){
-        result = "You tied becuase " + computerSelection + " loves " + playerSelection + ".";
-        return result;
-                
-            } else {
-                switch (tester){
-                    case "rockpaper": 
-                    case "scissorsrock":
-                    case "paperscissors":
-                        result = "You lost becuase " + computerSelection + " beats " + playerSelection + ".";
-                        break;
-                    case "scissorspaper":
-                    case "paperrock":
-                    case "rockscissors":
-                        result = "You won! becuase " + playerSelection + " beats " + computerSelection + ".";
-                        break;
-                    default:
-                        window.alert("You input an invalid response. The game will start again.");
-                        game();
-                        break;
+    if (playerSelection == computerSelection){
+    result = "You tied becuase " + computerSelection + " loves " + playerSelection + ".";
+    return result;     
+        } else {
+            switch (tester){
+                case "rockpaper": case "scissorsrock": case "paperscissors":
+                    result = "You lost because " + computerSelection + " beats " + playerSelection + ".";
+                    break;
+                case "scissorspaper": case "paperrock": case "rockscissors":
+                    result = "You won! because " + playerSelection + " beats " + computerSelection + ".";
+                    break;
+                default:
+                    window.alert("You input an invalid response. The game will start again.");
+                    game();
+                    break;
         }
         return result;
     } 
 }
 
-function game(){
-    console.log("\n\n\n\n\n\n\n\n\n\n"); //Adding space so you can see behind propmt
-    
-    let tiescore = 0;
-    let playerscore = 0;
-    let computerscore = 0;
-    
-    for (let i = 0; i < 5; i++) {
-    let playerPrompt = window.prompt("Choose: Rock, Paper, or Scissors" , ":)");
-    playerSelection = playerPrompt.toLowerCase();
-    console.log("Player chose " + playerSelection);
-    const computerSelection = getComputerChoice();
-    playGame(playerSelection, computerSelection);
-    console.log(playGame(playerSelection, computerSelection));
-    console.log("");
-
-    //adjust score
+    //Create score keeping function.
+function keepScore(){
     if (playGame(playerSelection, computerSelection).charAt(4) == "t" ){ tiescore = tiescore +1;}
     else if (playGame(playerSelection, computerSelection).charAt(4) == "w") { playerscore = playerscore + 1;}
-    else {computerscore = computerscore + 1;}     }// end For
+    else {computerscore = computerscore + 1;}  
+        
+        if (playerscore > 4){
+            const finalResultWin = document.querySelector('#playerWins');
+            finalResultWin.textContent = "Parabens! You won! \n To play again hit the 'Start over' button.";
+            document.querySelector('#playRock').disabled = true;
+            document.querySelector('#playPaper').disabled = true;
+            document.querySelector('#playScissors').disabled = true;
+        }
+        else if (computerscore > 4){
+            const finalResultLose = document.querySelector('#playerLost');
+            finalResultLose.textContent = "Too bad! You lost! \n To play again hit the 'Start over' button.";
+            document.querySelector('#playRock').disabled = true;
+            document.querySelector('#playPaper').disabled = true;
+            document.querySelector('#playScissors').disabled = true;
+        }
+            return;}
 
     
-    //summarize results
-    const finalScore = ( playerscore > computerscore ) ? "Player Wins!"
-                    : ( computerscore > playerscore) ? "Computer Wins!"
-                    : "Ultimate tie!";
-                    
-    console.log("Final Score:\nWins:" + playerscore + " Losses:" + computerscore + " Ties:" + tiescore + "\n" + finalScore);
-        
-    playAgain = window.prompt("Look at your results. Do you want to play again?", "Yes");
-    if (playAgain == "Yes"){
-        game();
-    } else { 
-        window.alert("Tchau");}
-    return "\nThanks for playing!\n\nCoded by: StayGoldenBoy\nGame By: Someone very old";
+
+function updateScore(){ 
+
+    const playerChooses = document.querySelector('#playerChose');
+    playerChooses.textContent = " " + playerSelection;
+
+    const computerChooses = document.querySelector('#computerChose');
+    computerChooses.textContent = " " + computerSelection;
+    
+    const playerScore = document.querySelector('#playerScore');
+    playerScore.textContent = playerscore;
+
+    const computerScore = document.querySelector('#computerScore');
+    computerScore.textContent = computerscore;
+
+    const tieScore = document.querySelector('#tiesScore');
+    tieScore.textContent = tiescore;
     
 }
+
+function roundDescription(){
+const roundWinner = document.querySelector('#eachGameResult');
+    roundWinner.textContent = result;}
